@@ -2,9 +2,7 @@
 
 [![ci](https://github.com/upswift/connect-deploy-update/actions/workflows/ci.yml/badge.svg)](https://github.com/upswift/connect-deploy-update/actions/workflows/ci.yml)
 
-This GitHub Action allows you to deploy an update flow configured in JFrog Connect’s web UI to specific devices or
-groups of devices within your fleet. You can specify device filters, update configurations, and provide deployment
-comments.
+This GitHub Action allows you to deploy a JFrog Connect Update Flow to IoT or edge devices. Specify which devices you would like to update, assign a specific deployment tag (app_name) and version (app_version) to the deployment, set the the parameters for the deployment, and add a comment. The update flow itself should be configured using the JFrog Connect web UI.
 
 ## Usage
 
@@ -56,14 +54,14 @@ comments.
 
 ### Inputs
 
-* project_key (required): The project key where the deployment will be executed.
+* project_key (required): The JFrog Connect fleet key where the deployment will be executed.
 * groups (optional): The device group names in JSON format to filter by group. Example: ["Production", "QA"].
 * filters (optional): The filters in JSON format to define device-specific criteria. Each filter includes type, operand,
   and value. See device_filter below for details.
 * flow_uuid (required): The update flow UUID that specifies which flow to use. You can obtain the UUID from the “Update
   Flows” tab in the JFrog Connect web UI.
-* app_name (optional): The name of the app to be deployed (must exist in the Connect web UI).
-* app_version (optional): The version of the app to deploy.
+* app_name (optional): The name of the deployment tag to be deployed (must exist in the Connect web UI).
+* app_version (optional): The version of the deployment tag to deploy.
 * comment (optional): A brief comment to describe the purpose or details of the deployment. Default is Default comment.
 * parameters_mapping (optional): The mapping of parameters for the update configuration in JSON format. Example: {"
   update_param_name1": "value", "update_param_name2": "value"}.
@@ -142,7 +140,7 @@ The deployment_configuration object specifies the parameters for the deployment:
 * flow_uuid: (Required) Specifies which update flow to use. You can obtain the UUID from the “Update Flows” tab in the
   Connect web UI.
 * comment: (Optional) You can add a brief comment to describe the purpose or importance of the deployment.
-* app: (Optional) Defines the app to deploy. This includes the name of the app and its version (e.g., "name": "
+* app: (Optional) Defines the deployment tag to deploy. This includes the deployment tag name and its version (e.g., "name": "
   default_app", "version": "v1.1").
 * parameters_mapping: (Optional) Specifies the update parameters configured in the update flow. Example: {"
   update_param_name1": "value", "update_param_name2": "value"}.
@@ -150,7 +148,7 @@ The deployment_configuration object specifies the parameters for the deployment:
 #### Notes
 
 * This action is designed to trigger device updates via the JFrog Connect API.
-* Ensure that you have the correct flow_uuid, project_key, and any necessary filters or app configurations before
+* Ensure that you have the correct flow_uuid, project_key (fleet key in the web UI), and any necessary filters or app configurations before
   running this action.
 * Filters can be left empty, but their structure must be defined.
 
